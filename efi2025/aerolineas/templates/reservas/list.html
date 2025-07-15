@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vuelos</title>
+</head>
+<body>
+    <h2 >lista de reservas</h2>
+    <ul>
+        {% for reserva in reservas%}
+            <li>Vuelo : de {{reserva.vuelo.origen}} a {{reserva.vuelo.destino}} <br> Pasajero : {{reserva.pasajero}} <br>Asiento : #{{reserva.asiento.numero}}</li> 
+        {%  endfor%}
+    </ul>
+</body>
+</html> 

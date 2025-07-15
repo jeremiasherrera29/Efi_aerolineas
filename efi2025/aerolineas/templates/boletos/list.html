@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelos</title>
+</head>
+<body>
+    <h2>Listado de boletos</h2>
+    <ul>
+        {% for boleto in boletos %}
+            <li>
+                Reserva: De {{ boleto.reserva.vuelo.origen}} a {{ boleto.reserva.vuelo.destino}} y el pasajero es: {{ boleto.reserva.pasajero.nombre}} <br>
+                Documento: {{ boleto.reserva.pasajero.documento}} <br>
+                Codigo de barra: {{boleto.codigo_barra}}
+            </li>
+        {% empty %}
+            <li>No hay boletos registrados.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html> 

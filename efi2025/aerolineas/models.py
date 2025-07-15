@@ -74,7 +74,7 @@ class Asiento(models.Model):
     fila = models.PositiveIntegerField()
     columna = models.PositiveIntegerField()
     tipo = models.CharField(max_length=100, choices= TIPO_ASIENTO)
-    estado = models.CharField(max_length=60, choices=ESTADOS_ASIENTO)#Busca las opciones de ESTADOS_ASIENTO para que el usuario no escriba cualquier cosa
+    estado = models.CharField(max_length=60, choices=ESTADOS_ASIENTO)# Busca las opciones de ESTADOS_ASIENTO para que el usuario no escriba cualquier cosa
 
     def __str__(self):
         return f"Avion: {self.avion} - Numero: {self.numero}"
@@ -121,7 +121,7 @@ class Usuario(models.Model):
     
 class Boleto(models.Model):
     reserva = models.ForeignKey(
-        Reserva, 
+        Reserva,
         on_delete=models.CASCADE
     )
     codigo_barra = models.CharField(max_length=50)

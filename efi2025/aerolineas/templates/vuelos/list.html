@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Vuelos{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-dark">
+        <i class="bi bi-airplane-engines"></i> Lista de Vuelos
+    </h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for vuelo in vuelos %}
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-airplane-fill me-2"></i>{{ vuelo.avion }}
+                    </h5>
+                    <p class="card-text">
+                        <span class="fw-semibold"><i class="bi bi-geo-alt-fill"></i> Origen:</span> {{ vuelo.origen }}<br>
+                        <span class="fw-semibold"><i class="bi bi-flag-fill"></i> Destino:</span> {{ vuelo.destino }}<br>
+                        <span class="fw-semibold"><i class="bi bi-clock-fill"></i> Salida:</span> {{ vuelo.fecha_salida }}<br>
+                        <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> Llegada:</span> {{ vuelo.fecha_llegada }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay vuelos registrados en este momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuelos</title>
+</head>
+<body>
+    <h2>Listado de aviones</h2>
+    <ul>
+        {% for avion in aviones %}
+            <li>
+                Modelo: {{avion.modelo}} <br> Capacidad: {{avion.capacidad}} <br> Filas: {{avion.filas}} <br> Columas: {{avion.columnas}}</li>
+            </li>
+        {% empty %}
+            <li>No hay aviones registrados.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html> 

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-body p-5">
+                    <h2 class="text-center text-primary mb-4">
+                        <i class=""></i> Iniciar sesión
+                    </h2>
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="form-floating mb-3">
+                            <label for="username"><i class="bi bi-person-fill me-2"></i>Nombre de usuario</label>
+                            <input 
+                            type="text" 
+                            class="form-control" 
+                            id="username" 
+                            name="username" 
+                            placeholder="Escriba su nombre de usuario" 
+                            required>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <label for="password"><i class="bi bi-lock-fill me-2"></i>Contraseña</label>
+                            <input type="password"
+                            class="form-control" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Escriba su contraseña" 
+                            required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
+                            </button>
+                        </div>
+                    </form>
+
+                    <p class="mt-4 text-center text-muted">
+                        ¿No tenés cuenta? <a href="{% url 'register' %}" class="text-decoration-none">Registrate</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
