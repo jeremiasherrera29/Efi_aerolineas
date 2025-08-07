@@ -120,13 +120,19 @@ class Usuario(models.Model):
         return f"Usuario: {self.username} - Rol: {self.rol}"
     
 class Boleto(models.Model):
+    ESTADOS_BOLETO = [
+        ('emitido', 'Emitido'),
+        ('cancelado', 'Cancelado'),
+        ('usado', 'Usado'),
+    ]
+
     reserva = models.ForeignKey(
         Reserva,
         on_delete=models.CASCADE
     )
     codigo_barra = models.CharField(max_length=50)
-    fecha_emision = models.DateTimeField
-    estado= models.CharField(max_length=50)
+    fecha_emision = models.DateTimeField()
+    estado = models.CharField(max_length=50, choices=ESTADOS_BOLETO)
 
     def __str__(self):
         return f"Boleto: {self.codigo_barra}"

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Pasajero{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-danger text-white">
+      <h4 class="mb-0"></i> Confirmar eliminación de pasajero</h4>
+    </div>
+    <div class="card-body">
+        <p class="fs-5">
+            ¿Estás seguro que querés eliminar al pasajero
+            <strong>{{ pasajero.nombre }}</strong> con documento
+            <strong>{{ pasajero.documento }}</strong>?
+        </p>
+
+      <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+          <i class="bi bi-trash-fill"></i> Confirmar eliminación
+        </button>
+        <a href="{% url 'pasajeros_list' %}" class="btn btn-secondary">
+          <i class="bi bi-x-circle-fill"></i> Cancelar
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

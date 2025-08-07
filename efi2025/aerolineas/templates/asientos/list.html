@@ -1,20 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos</title>
-</head>
-<body>
-    <h2>Listado de asientos</h2>
-    <ul>
+{% extends "base.html" %}
+
+{% block title %}Lista de Asientos{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-dark">
+        <i class="bi bi-grid-3x3-gap"></i> Lista de Asientos
+    </h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for asiento in asientos %}
-            <li>
-                Avion: {{asiento.avion.modelo}} <br> Numero: {{asiento.numero}} <br> Columna: {{asiento.columna}} <br> Tipo: {{asiento.tipo}} <br> Estado: {{asiento.estado}}</li>
-            </li>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">    
+                        <i class="bi bi-airplane-engines"></i> {{ asiento.avion.modelo }}
+                    </h5>
+                    <p class="card-text">
+                        <span><i class="bi bi-hash"></i> <strong>Número:</strong></span> {{ asiento.numero }}<br>
+                        <span><i class="bi bi-grid"></i> <strong>Posición:</strong></span> Fila {{ asiento.fila }}, Columna {{ asiento.columna }}<br>
+                        <span><i class="bi bi-star"></i> <strong>Tipo:</strong></span> 
+                        {% if asiento.tipo == 'ECO' %}
+                            <span>Económica</span>
+                        {% elif asiento.tipo == 'PRE' %}
+                            <span>Premium</span>
+                        {% elif asiento.tipo == 'BUS' %}
+                            <span>Ejecutiva</span>
+                        {% elif asiento.tipo == 'FIR' %}
+                            <span>Primera Clase</span>
+                        {% else %}
+                            <span>{{ asiento.get_tipo_display }}</span>
+                        {% endif %}<br>
+                        <span><i class="bi bi-circle-fill"></i> <strong>Estado:</strong></span> 
+                        {% if asiento.estado == 'Disponible' %}
+                            <span>Disponible</span>
+                        {% elif asiento.estado == 'Ocupado' %}
+                            <span>Ocupado</span>
+                        {% else %}
+                            <span>{{ asiento.estado }}</span>
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'asientos_detail' asiento.id %}" class="btn btn-outline-primary">
+                         <i class="bi bi-eye-fill"></i> Ver Detalle
+                    </a>
+                    <a href="{% url 'asientos_delete' asiento.id %}" class="btn btn-outline-danger">
+                        <i class="bi bi-trash3-fill"></i> Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
         {% empty %}
-            <li>No hay asientos registrados.</li>
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay asientos registrados en este momento.
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-</body>
-</html> 
+    </div>
+</div>
+{% endblock %}

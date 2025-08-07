@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle del Vuelo{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Detalle del Vuelo</h2>
+        <p class="text-muted">Información completa sobre el vuelo seleccionado</p>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="card shadow-lg border-0 w-75">
+            <div class="card-body">
+                <h4 class="card-title text-primary mb-4">
+                    <i class="bi bi-geo-alt-fill text-danger"></i>
+                    Vuelo de {{ vuelo.origen }} a {{ vuelo.destino }}
+                </h4>
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong> Avión:</strong> {{ vuelo.avion.modelo }}</li>
+                    <li class="list-group-item"><strong> Fecha de salida:</strong> {{ vuelo.fecha_salida }}</li>
+                    <li class="list-group-item"><strong> Fecha de llegada:</strong> {{ vuelo.fecha_llegada }}</li>
+                    <li class="list-group-item"><strong> Duración:</strong> {{ vuelo.duracion }}</li>
+                    <li class="list-group-item"><strong> Estado:</strong> {{ vuelo.get_estado_display }}</li>  <!-- esto es para que no este abreviado, sino que este completa a palabra ej ABD va a decir abordando -->
+                    <li class="list-group-item"><strong> Precio base:</strong> ${{ vuelo.precio_base }}</li>
+                </ul>
+
+                <div class="mt-4 d-flex justify-content-between">
+                    <a href="{% url 'vuelos_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Volver a la lista
+                    </a>
+                    <a href="{% url 'pasajeros_por_vuelo' vuelo.id %}" class="btn btn-info text-white">
+                        <i class="bi bi-people-fill"></i> Ver Pasajeros del Vuelo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

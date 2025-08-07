@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle de Reserva{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+  <div class="card shadow-sm rounded-4">
+    <div class="card-header bg-info text-white text-center rounded-top-4">
+      <h3 class="mb-0">
+        <i class="bi bi-ticket-perforated-fill"></i> Detalle de Reserva
+      </h3>
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Reserva:</strong> {{ reserva.codigo_reserva }}
+        </li>
+        <li class="list-group-item">
+          <strong>Pasajero:</strong> {{ reserva.pasajero.nombre }} ({{ reserva.pasajero.documento }})
+        </li>
+        <li class="list-group-item">
+          <strong>Vuelo:</strong> {{ reserva.vuelo.origen }} ➔ {{ reserva.vuelo.destino }}
+        </li>
+        <li class="list-group-item">
+          <strong>Asiento:</strong> Fila {{ reserva.asiento.fila }}, Columna {{ reserva.asiento.columna }} ({{ reserva.asiento.tipo }})
+        </li>
+        <li class="list-group-item">
+          <strong>Estado:</strong> {{ reserva.get_estado_display }}
+        </li>
+        <li class="list-group-item">
+          <strong>Precio:</strong> ${{ reserva.precio }}
+        </li>
+        <li class="list-group-item">
+          <strong>Fecha de Reserva:</strong> {{ reserva.fecha_reserva|date:"d/m/Y H:i" }}
+        </li>
+      </ul>
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <a href="{% url 'reservas_list' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i> Volver
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

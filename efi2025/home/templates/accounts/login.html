@@ -4,19 +4,19 @@
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container pt-5">
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-5">
             <div class="card shadow-lg rounded-4">
                 <div class="card-body p-5">
-                    <h2 class="text-center text-primary mb-4">
+                    <h2 class="text-center text-primary mb-4 ">
                         <i class=""></i> Iniciar sesión
                     </h2>
                     <form method="post">
                         {% csrf_token %}
 
                         <div class="form-floating mb-3">
-                            <label for="username"><i class="bi bi-person-fill me-2"></i>Nombre de usuario</label>
+                            <label for="username"><i class=""></i>Nombre de usuario</label>
                             <input 
                             type="text" 
                             class="form-control" 
@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="form-floating mb-4">
-                            <label for="password"><i class="bi bi-lock-fill me-2"></i>Contraseña</label>
+                            <label for="password"><i class=""></i>Contraseña</label>
                             <input type="password"
                             class="form-control" 
                             id="password" 
@@ -36,8 +36,8 @@
                             required>
                         </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">
+                        <div class="text-center ">
+                            <button type="submit" class="btn btn-primary btn-lg">
                                 <i class="bi bi-box-arrow-in-right me-1"></i> Entrar
                             </button>
                         </div>

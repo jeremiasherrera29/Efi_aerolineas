@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Boleto{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        Confirmar Eliminacion de Boleto
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        ¿Estas seguro de que deseas eliminar el siguiente boleto?
+                    </p>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item">
+                            <strong>Codigo de Barra:</strong> {{ object.codigo_barra }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Pasajero:</strong> {{ object.reserva.pasajero.nombre }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Vuelo:</strong> {{ object.reserva.vuelo.origen }} ➔ {{ object.reserva.vuelo.destino }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Fecha de Emision:</strong> {{ object.fecha_emision }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Estado:</strong> {{ object.estado|capfirst }}
+                        </li>
+                    </ul>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <a href="{% url 'boletos_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle-fill"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash-fill"></i> Eliminar Boleto
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

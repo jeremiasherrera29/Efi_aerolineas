@@ -1,21 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos</title>
-</head>
-<body>
-    <h2>Lista de pasajeros</h2>
-    <ul>
+{% extends "base.html" %}
+
+{% block title %}Lista de Pasajeros{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-dark">
+        <i class="bi bi-people-fill"></i> Lista de Pasajeros
+        <a href="{% url 'pasajeros_create' %}" class="btn btn-success">Crear Pasajero</a>  
+    </h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for pasajero in pasajeros %}
-            <li>
-                Nombre: {{ pasajero.nombre }} <br>
-                Documento: {{ pasajero.documento }}
-            </li>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-person-circle"></i> {{ pasajero.nombre }}
+                    </h5>
+                    <p class="card-text">
+                        <span class="fw-semibold"><i class="bi bi-card-text"></i> <strong>Documento:</strong></span> {{ pasajero.documento }}<br>
+                        <span class="fw-semibold"><i class="bi bi-envelope"></i> <strong>Email:</strong></span> {{ pasajero.email }}<br>
+                        <span class="fw-semibold"><i class="bi bi-telephone"></i> <strong>Teléfono:</strong></span> {{ pasajero.telefono }}<br>
+                        <span class="fw-semibold"><i class="bi bi-calendar"></i> <strong>Fecha Nacimiento:</strong></span> {{ pasajero.fecha_nacimiento }}<br>
+                        <span class="fw-semibold"><i class="bi bi-file-text"></i> <strong>Tipo Documento:</strong></span> 
+                        {% if pasajero.tipo_documento == 'DNI' %}
+                            <span class="">DNI</span>
+                        {% elif pasajero.tipo_documento == 'CUIL' %}
+                            <span class="">CUIL</span>
+                        {% elif pasajero.tipo_documento == 'CARCOND' %}
+                            <span class="">Carnet Conducir</span>
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'pasajeros_detail' pasajero.id %}" class="btn btn-outline-primary">
+                         <i class="bi bi-eye-fill"></i> Ver Detalle
+                    </a>
+                    <a href="{% url 'pasajeros_delete' pasajero.id %}" class="btn btn-outline-danger">
+                        <i class="bi bi-trash3-fill"></i> Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
         {% empty %}
-            <li>No hay pasajeros registrados.</li>
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay pasajeros registrados en este momento.
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-</body>
-</html>
+    </div>
+</div>
+{% endblock %}

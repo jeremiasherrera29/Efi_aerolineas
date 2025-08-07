@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-danger text-white">
+      <h4 class="mb-0"><i></i> Confirmar eliminación de reserva</h4>
+    </div>
+    <div class="card-body">
+        <p class="fs-5">
+            ¿Estás seguro que querés eliminar la reserva de
+            <strong>{{ reserva.pasajero.nombre }}</strong> para el vuelo
+            <strong>{{ reserva.vuelo.origen }} ➔ {{ reserva.vuelo.destino }}</strong>?
+        </p>
+
+      <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+          <i class="bi bi-trash-fill"></i> Confirmar eliminación
+        </button>
+        <a href="{% url 'reservas_list' %}" class="btn btn-secondary">
+          <i class="bi bi-x-circle-fill"></i> Cancelar
+        </a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

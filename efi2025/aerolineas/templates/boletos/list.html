@@ -1,22 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vuelos</title>
-</head>
-<body>
-    <h2>Listado de boletos</h2>
-    <ul>
+{% extends "base.html" %}
+
+{% block title %}Lista de Boletos{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-dark">
+        <i class="bi bi-ticket-perforated-fill"></i> Lista de Boletos
+        <a href="{% url 'boletos_create' %}" class="btn btn-success">Crear Boleto</a>  
+    </h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for boleto in boletos %}
-            <li>
-                Reserva: De {{ boleto.reserva.vuelo.origen}} a {{ boleto.reserva.vuelo.destino}} y el pasajero es: {{ boleto.reserva.pasajero.nombre}} <br>
-                Documento: {{ boleto.reserva.pasajero.documento}} <br>
-                Codigo de barra: {{boleto.codigo_barra}}
-            </li>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <i class="bi bi-upc-scan me-2"></i> {{ boleto.codigo_barra }}
+                    </h5>
+                    <p class="card-text">
+                        <span class="fw-semibold"></i><strong>Código de Reserva:</strong> </span> {{ boleto.reserva.codigo_reserva }}<br>
+                        <span class="fw-semibold"></i> <strong>Fecha de emision:</strong></span> {{ boleto.fecha_emision|date:"d/m/Y H:i" }}<br>
+                        <span class="fw-semibold"></i> <strong>Estado:</strong></span> {{ boleto.estado }}
+                    </p>
+                    <a href="{% url 'boletos_detail' boleto.id %}" class="btn btn-outline-primary mt-3">
+                        <i class="bi bi-eye-fill"></i> Ver Detalle
+                    </a>
+                    <a href="{% url 'boletos_delete' boleto.id %}" class="btn btn-outline-danger mt-3 ms-2">
+                        <i class="bi bi-trash-fill"></i> Eliminar Boleto
+                    </a>
+                </div>
+            </div>
+        </div>
         {% empty %}
-            <li>No hay boletos registrados.</li>
+        <div class="col-12">
+            <div class="alert alert-info text-center" role="alert">
+                No hay boletos registrados en este momento.
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-</body>
-</html> 
+    </div>
+</div>
+{% endblock %}

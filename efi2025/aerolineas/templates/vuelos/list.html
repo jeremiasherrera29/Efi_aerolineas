@@ -17,11 +17,18 @@
                         <i class="bi bi-airplane-fill me-2"></i>{{ vuelo.avion }}
                     </h5>
                     <p class="card-text">
-                        <span class="fw-semibold"><i class="bi bi-geo-alt-fill"></i> Origen:</span> {{ vuelo.origen }}<br>
-                        <span class="fw-semibold"><i class="bi bi-flag-fill"></i> Destino:</span> {{ vuelo.destino }}<br>
-                        <span class="fw-semibold"><i class="bi bi-clock-fill"></i> Salida:</span> {{ vuelo.fecha_salida }}<br>
-                        <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> Llegada:</span> {{ vuelo.fecha_llegada }}
+                        <span class="fw-semibold"><i class="bi bi-geo-alt-fill"></i> <strong>Origen:</strong></span> {{ vuelo.origen }}<br>
+                        <span class="fw-semibold"><i class="bi bi-flag-fill"></i> <strong>Destino:</strong></span> {{ vuelo.destino }}<br>
+                        <span class="fw-semibold"><i class="bi bi-clock-fill"></i> <strong>Salida:</strong></span> {{ vuelo.fecha_salida }}<br>
+                        <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> <strong>Llegada:</strong></span> {{ vuelo.fecha_llegada }}
+
                     </p>
+                    <a href="{% url 'vuelos_detail' vuelo.id %}" class="btn btn-outline-primary mt-3">
+                         <i class="bi bi-eye-fill"></i> Ver Detalle
+                    </a>
+                    <a href="{% url 'vuelos_delete' vuelo.id %}" class="btn btn-outline-danger mt-3">
+                         <i class="bi bi-trash-fill"></i> Eliminar Vuelo
+                    </a>    
                 </div>
             </div>
         </div>
