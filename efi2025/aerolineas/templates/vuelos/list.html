@@ -23,11 +23,14 @@
                         <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> <strong>Llegada:</strong></span> {{ vuelo.fecha_llegada }}
 
                     </p>
+                    <a href="{% url 'disponibilidad_asientos' vuelo.id %}" class="btn btn-outline-primary mt-3">
+                        <i class="bi bi-eye-fill"></i> Ver Asientos
+                    </a>
                     <a href="{% url 'vuelos_detail' vuelo.id %}" class="btn btn-outline-primary mt-3">
-                         <i class="bi bi-eye-fill"></i> Ver Detalle
+                        <i class="bi bi-eye-fill"></i> Ver Detalle
                     </a>
                     <a href="{% url 'vuelos_delete' vuelo.id %}" class="btn btn-outline-danger mt-3">
-                         <i class="bi bi-trash-fill"></i> Eliminar Vuelo
+                        <i class="bi bi-trash-fill"></i> Eliminar Vuelo
                     </a>    
                 </div>
             </div>

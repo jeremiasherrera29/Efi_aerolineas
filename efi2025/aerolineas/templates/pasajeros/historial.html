@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Historial de Vuelos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">Historial de vuelos de {{ pasajero.nombre }}</h2>
+        <p class="text-muted">Todos los vuelos reservados por este pasajero</p>
+    </div>
+
+    {% if reservas %}
+        <div class="row justify-content-center">
+            {% for reserva in reservas %}
+            <div class="col-md-8 mb-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary mb-3">
+                            <i class="bi bi-airplane"></i> Vuelo: {{ reserva.vuelo.origen }} → {{ reserva.vuelo.destino }}
+                        </h5>
+                        <ul class="list-group list-group-flush mb-3">
+                            <li class="list-group-item"><strong>Código Reserva:</strong> {{ reserva.codigo_reserva }}</li>
+                            <li class="list-group-item"><strong>Fecha Salida:</strong> {{ reserva.vuelo.fecha_salida }}</li>
+                            <li class="list-group-item"><strong>Fecha Llegada:</strong> {{ reserva.vuelo.fecha_llegada}}</li>
+                            <li class="list-group-item"><strong>Estado Reserva:</strong> {{ reserva.estado }}</li>
+                            <li class="list-group-item"><strong>Precio:</strong> ${{ reserva.precio }}</li>
+                            <li class="list-group-item"><strong>Asiento:</strong> {{ reserva.asiento.numero }} ({{ reserva.asiento.tipo }})</li>
+                        </ul>
+                        <a href="{% url 'vuelos_detail' reserva.vuelo.id %}" class="btn btn-success">
+                            Ver Detalles del Vuelo
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center mt-5">
+            <p class="text-muted fs-5">Este pasajero no tiene vuelos registrados.</p>
+        </div>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'pasajeros_detail' pasajero.id %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left-circle"></i> Volver al detalle
+        </a>
+    </div>
+</div>
+{% endblock %}

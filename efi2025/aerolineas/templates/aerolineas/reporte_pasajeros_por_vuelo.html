@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Reporte de Pasajeros - Vuelo {{ vuelo.codigo }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4">Reporte de Pasajeros - Vuelo {{ vuelo.codigo }}</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Información del vuelo</h5>
+            <p><strong>Origen:</strong> {{ vuelo.origen }}</p>
+            <p><strong>Destino:</strong> {{ vuelo.destino }}</p>
+            <p><strong>Fecha de salida:</strong> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+            <p><strong>Fecha de llegada:</strong> {{ vuelo.fecha_llegada|date:"d/m/Y H:i" }}</p>
+            <p><strong>Avión:</strong> {{ vuelo.avion.modelo }}</p>
+        </div>
+    </div>
+
+    {% if pasajeros %}
+        
+        <h5 class="mb-3">Lista de Pasajeros ({{ pasajeros|length }})</h5>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pasajero in pasajeros %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ pasajero.nombre }} {{ pasajero.apellido }}</td>
+                        <td>{{ pasajero.documento }}</td>
+                        <td>{{ pasajero.email }}</td>
+                        <td>{{ pasajero.telefono }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No hay pasajeros registrados en este vuelo.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'vuelos_list' %}" class="btn btn-secondary mt-3">Volver a la lista de vuelos</a>
+</div>
+{% endblock %}

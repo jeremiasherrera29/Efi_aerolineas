@@ -1,7 +1,7 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
-
 class Avion(models.Model):
     modelo = models.CharField(max_length=200)
     capacidad = models.PositiveIntegerField()
@@ -98,7 +98,7 @@ class Reserva(models.Model):
         on_delete=models.CASCADE
     ) #FK)
     estado = models.CharField(max_length=60, choices=ESTADOS_RESERVA)
-    fecha_reserva = models.DateTimeField()
+    fecha_reserva = models.DateTimeField(default=timezone.now)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     codigo_reserva = models.CharField(max_length=100)
 

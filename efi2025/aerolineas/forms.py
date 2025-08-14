@@ -35,47 +35,32 @@ class VueloForm(forms.ModelForm):
 class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
-        fields = ["vuelo", "pasajero", "asiento", "estado", "fecha_reserva", "precio"]
+        fields = ["vuelo", "pasajero", "asiento", "precio"]
         widgets = {
-            'vuelo': forms.Select(attrs={
-                'class': 'form-control personalizado'
-            }),
-            'pasajero': forms.Select(attrs={
-                'class': 'form-control  personalizado'
-            }),
-            'asiento': forms.Select(attrs={
-                'class': 'form-control  personalizado'
-            }),
-            'estado': forms.Select(attrs={
-                'class': 'form-control  personalizado'
-            }),
-            'fecha_reserva': forms.DateTimeInput(attrs={
-                'class': 'form-control  personalizado',
-                'type': 'datetime-local'
-            }),
-            'precio': forms.NumberInput(attrs={
-                'class': 'form-control personalizado',
-            }),
+            'vuelo': forms.Select(attrs={'class': 'form-control'}),
+            'pasajero': forms.Select(attrs={'class': 'form-control'}),
+            'asiento': forms.Select(attrs={'class': 'form-control'}),
+            'precio': forms.NumberInput(attrs={'class': 'form-control'}),
         }
-    def clean(self):
-        cleaned_data = super().clean()
-        vuelo = cleaned_data.get("vuelo")
-        pasajero = cleaned_data.get("pasajero")
-        asiento = cleaned_data.get("asiento")
-        
-        if vuelo and asiento:
-            avion = vuelo.avion
-            if asiento not in avion.asiento_set.all():
-                raise ValidationError("El asiento seleccionado no pertenece al avión asignado a este vuelo.")
-            
-        if vuelo and pasajero:
-            if Reserva.objects.filter(vuelo=vuelo, pasajero=pasajero).exists():
-                raise ValidationError("Este pasajero ya tiene una reserva para este vuelo.")
-            
-        if asiento and asiento.estado != 'Disponible':
-            raise ValidationError("El asiento seleccionado no está disponible.")
 
-        return cleaned_data
+    def clean(self):
+        cleaned = super().clean()
+        vuelo = cleaned.get('vuelo')
+        pasajero = cleaned.get('pasajero')
+        asiento = cleaned.get('asiento')
+
+        if vuelo and asiento:
+            if asiento.avion_id != vuelo.avion_id:
+                raise ValidationError("El asiento no pertenece al avión del vuelo seleccionado.")
+
+        if vuelo and pasajero:
+            if Reserva.objects.filter(vuelo=vuelo, pasajero=pasajero, estado__in=['Confirmado', 'Pendiente']).exists():
+                raise ValidationError("Este pasajero ya tiene una reserva para este vuelo.")
+
+        if asiento and asiento.estado != 'Disponible':
+            raise ValidationError("El asiento no está disponible.")
+
+        return cleaned
 
 class PasajeroForm(forms.ModelForm):
     class Meta:
@@ -176,24 +161,23 @@ class AvionForm(forms.ModelForm):
 class AsientoForm(forms.ModelForm):
     class Meta:
         model = Asiento
-        fields = ["numero", "fila", "columna", "tipo", "estado"]
+        fields = ["avion", "numero", "fila", "columna", "tipo", "estado"]
         widgets = {
+            'avion': forms.Select(attrs={
+                'class': 'form-control personalizado'
+            }),
             'numero': forms.TextInput(attrs={
-                'class': 'form-control  personalizado',
+                'class': 'form-control personalizado',
                 'placeholder': 'Número de asiento'
             }),
             'fila': forms.NumberInput(attrs={
-                'class': 'form-control  personalizado',
+                'class': 'form-control personalizado',
                 'placeholder': 'Fila'
             }),
             'columna': forms.NumberInput(attrs={
-                'class': 'form-control  personalizado',
+                'class': 'form-control personalizado',
                 'placeholder': 'Columna'
             }),
-            'tipo': forms.Select(attrs={
-                'class': 'form-control  personalizado'
-            }),
-            'estado': forms.Select(attrs={
-                'class': 'form-control  personalizado'
-            }),
+            'tipo': forms.Select(attrs={'class': 'form-control personalizado'}),
+            'estado': forms.Select(attrs={'class': 'form-control personalizado'}),
         }

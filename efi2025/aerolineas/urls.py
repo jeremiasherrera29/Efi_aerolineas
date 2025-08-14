@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import (
     VueloList, VueloDetail, VueloDelete, VueloCreate,
-    PasajeroList, PasajeroDetail, PasajeroDelete, PasajeroCreate,
+    PasajeroList, PasajeroDetail, PasajeroDelete, PasajeroCreate, 
     ReservaList, ReservaDetail, ReservaDelete, ReservaCreate,
     BoletoList, BoletoDetail, BoletoDelete, BoletoCreate,
     UsuarioList, UsuarioDelete, UsuarioCreate, UsuarioUpdate,
@@ -11,7 +11,6 @@ from .views import (
 )
 
 urlpatterns = [
-    path('vuelos/<int:vuelo_id>/pasajeros/', views.pasajeros_por_vuelo, name='pasajeros_por_vuelo'),
     # Vuelos   
     path('vuelos/', VueloList.as_view(), name='vuelos_list'),
     path('vuelos/<int:vuelo_id>/', VueloDetail.as_view(), name='vuelos_detail'),
@@ -23,6 +22,9 @@ urlpatterns = [
     path('pasajeros/<int:pasajero_id>/', PasajeroDetail.as_view(), name='pasajeros_detail'),
     path('pasajeros/<int:pasajero_id>/eliminar/', PasajeroDelete.as_view(), name='pasajeros_delete'),
     path('pasajeros/crear/', PasajeroCreate.as_view(), name='pasajeros_create'),
+    # Historial de vuelos
+    path('pasajeros/<int:pasajero_id>/historial/', views.HistorialVuelosPasajero.as_view(), name='pasajeros_historial'),
+
 
     # Reservas
     path('reservas/', ReservaList.as_view(), name='reservas_list'),
@@ -49,8 +51,14 @@ urlpatterns = [
     path('aviones/crear/', AvionCreate.as_view(), name='aviones_create'),
 
     # Asientos
-    path('asientos/', AsientoList.as_view(), name='asientos_list'),
-    path('asientos/<int:asiento_id>/', AsientoDetail.as_view(), name='asientos_detail'),
-    path('asientos/<int:asiento_id>/eliminar/', AsientoDelete.as_view(), name='asientos_delete'),
-    path('asientos/crear/', AsientoCreate.as_view(), name='asientos_create'),
+    path('asientos/', views.AsientoList.as_view(), name='asientos_list'),
+    path('asientos/<int:asiento_id>/', views.AsientoDetail.as_view(), name='asientos_detail'),
+    path('asientos/create/', views.AsientoCreate.as_view(), name='asientos_create'),
+    path('asientos/<int:asiento_id>/delete/', views.AsientoDelete.as_view(), name='asientos_delete'),
+
+    # Disponibilidad y reservas
+    path('vuelos/<int:vuelo_id>/asientos/', views.disponibilidad_asientos, name='disponibilidad_asientos'),
+    path('vuelos/<int:vuelo_id>/asientos/<int:asiento_id>/reservar/', views.reservar_asiento, name='reservar_asiento'),
+
+    path('reportes/pasajeros/<int:vuelo_id>/', views.reporte_pasajeros_por_vuelo, name='reporte_pasajeros_por_vuelo'),
 ]

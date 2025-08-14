@@ -1,44 +1,45 @@
-{% extends "base.html" %}
+    {% extends "base.html" %}
 
-{% block title %}Lista de Aviones{% endblock %}
+    {% block title %}Lista de Aviones{% endblock %}
 
-{% block content %}
-<div class="container py-5">
-    <h2 class="mb-4 text-center text-dark">
-        <i class="bi bi-airplane"></i> Lista de Aviones
-    </h2>
+    {% block content %}
+    <div class="container py-5">
+        <h2 class="mb-4 text-center text-dark">
+            <i class="bi bi-airplane"></i> Lista de Aviones
+            <a href="{% url 'aviones_create' %}" class="btn btn-success">Crear Avion</a>  
+        </h2>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {% for avion in aviones %}
-        <div class="col">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        <i class="bi bi-airplane-engines"></i> {{ avion.modelo }}
-                    </h5>
-                    <p class="card-text">
-                        <span class="fw-semibold"><i class="bi bi-people"></i> <strong>Capacidad:</strong></span> {{ avion.capacidad }} pasajeros<br>
-                        <span><i class="bi bi-grid-3x3"></i> <strong>Filas:</strong></span> {{ avion.filas }}<br>
-                        <span><i class="bi bi-columns"></i> <strong>Columnas:</strong></span> {{ avion.columnas }}<br>
-                        <span><i class="bi bi-calculator"></i> <strong>Configuración:</strong></span> 
-                        <span>{{ avion.filas }}x{{ avion.columnas }}</span>
-                    </p>
-                    <a href="{% url 'aviones_detail' avion.id %}" class="btn btn-outline-primary mt-3">
-                         <i class="bi bi-eye-fill"></i> Ver Detalle
-                    </a>
-                    <a href="{% url 'aviones_delete' avion.id %}" class="btn btn-outline-danger mt-3">
-                         <i class="bi bi-trash-fill"></i> Eliminar Avion
-                    </a> 
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for avion in aviones %}
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            <i class="bi bi-airplane-engines"></i> {{ avion.modelo }}
+                        </h5>
+                        <p class="card-text">
+                            <span class="fw-semibold"><i class="bi bi-people"></i> <strong>Capacidad:</strong></span> {{ avion.capacidad }} pasajeros<br>
+                            <span><i class="bi bi-grid-3x3"></i> <strong>Filas:</strong></span> {{ avion.filas }}<br>
+                            <span><i class="bi bi-columns"></i> <strong>Columnas:</strong></span> {{ avion.columnas }}<br>
+                            <span><i class="bi bi-calculator"></i> <strong>Configuración:</strong></span> 
+                            <span>{{ avion.filas }}x{{ avion.columnas }}</span>
+                        </p>
+                        <a href="{% url 'aviones_detail' avion.id %}" class="btn btn-outline-primary mt-3">
+                            <i class="bi bi-eye-fill"></i> Ver Detalle
+                        </a>
+                        <a href="{% url 'aviones_delete' avion.id %}" class="btn btn-outline-danger mt-3">
+                            <i class="bi bi-trash-fill"></i> Eliminar Avion
+                        </a> 
+                    </div>
                 </div>
             </div>
-        </div>
-        {% empty %}
-        <div class="col-12">
-            <div class="alert alert-info text-center" role="alert">
-                No hay aviones registrados en este momento.
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center" role="alert">
+                    No hay aviones registrados en este momento.
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-</div>
-{% endblock %}
+    {% endblock %}

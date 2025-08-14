@@ -6,7 +6,6 @@
 <div class="container py-5">
     <h2 class="mb-4 text-center text-dark">
         <i class="bi bi-card-checklist"></i> Lista de Reservas
-        <a href="{% url 'reservas_create' %}" class="btn btn-success ">Crear Reserva</a>
     </h2>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -18,7 +17,8 @@
                         <i class="bi bi-airplane-engines text-primary"></i> {{ reserva.vuelo.origen }} ➔ {{ reserva.vuelo.destino }}
                     </h5>
                     <p class="card-text">
-                        <span class="fw-semibold"><i class=""></i> <strong>Pasajero:</strong></span> {{ reserva.pasajero }}<br>
+                        <span class="fw-semibold"><i class=""></i> <strong>Pasajero:</strong></span> {{ reserva.pasajero.nombre }}<br>
+                        <strong>Documento:</strong></span> {{ reserva.pasajero.documento }}<br>
                         <span class="fw-semibold"><i class=""></i><strong>Asiento:</strong> </span> #{{ reserva.asiento.numero }}
                     </p>
                     <a href="{% url 'reservas_detail' reserva.id %}" class="btn btn-outline-primary">
