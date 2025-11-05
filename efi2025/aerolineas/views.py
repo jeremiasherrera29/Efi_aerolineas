@@ -31,7 +31,7 @@ class VueloDelete(DeleteView):
     success_url = reverse_lazy('vuelos_list')
 
 
-class VueloCreate(CreateView):
+class VueloCreate(CreateView):                                                                                          
     form_class = VueloForm
     template_name = 'vuelos/create.html'
     success_url = reverse_lazy('vuelos_list')
@@ -115,27 +115,6 @@ def reporte_pasajeros_por_vuelo(request, vuelo_id):
         "vuelo": vuelo,
         "pasajeros": pasajeros
     })
-
-@login_required
-def reservar_asiento(request, vuelo_id, asiento_id):
-    vuelo = get_object_or_404(Vuelo, id=vuelo_id)
-    asiento = get_object_or_404(Asiento, id=asiento_id, vuelo=vuelo)
-
-    # Obtener pasajero asociado al usuario autenticado
-    try:
-        pasajero = request.user.pasajero
-    except Pasajero.DoesNotExist:
-        messages.error(request, "No tienes un perfil de pasajero asociado. Por favor crea uno antes de reservar.")
-        return redirect('crear_pasajero')
-
-    # Crear reserva
-    Reserva.objects.create(vuelo=vuelo, asiento=asiento, pasajero=pasajero)
-    asiento.disponible = False
-    asiento.save()
-
-    messages.success(request, "Reserva realizada con éxito.")
-    return redirect('detalle_vuelo', pk=vuelo.id)
-
 # ---------- BOLETOS ----------
 class BoletoList(ListView):
     model = Boleto
@@ -254,7 +233,7 @@ def disponibilidad_asientos(request, vuelo_id):
     for asiento in asientos:
         filas.setdefault(asiento.fila, []).append(asiento)
 
-    pasajeros = Pasajero.objects.all()  # IMPORTANTE
+    pasajeros = Pasajero.objects.all() 
 
     return render(request, 'asientos/disponibilidad.html', {
         'vuelo': vuelo,

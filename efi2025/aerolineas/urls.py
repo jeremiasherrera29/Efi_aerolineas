@@ -1,5 +1,10 @@
 from django.urls import path
 from . import views
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 from .views import (
     VueloList, VueloDetail, VueloDelete, VueloCreate,
     PasajeroList, PasajeroDetail, PasajeroDelete, PasajeroCreate, 
@@ -61,4 +66,21 @@ urlpatterns = [
     path('vuelos/<int:vuelo_id>/asientos/<int:asiento_id>/reservar/', views.reservar_asiento, name='reservar_asiento'),
 
     path('reportes/pasajeros/<int:vuelo_id>/', views.reporte_pasajeros_por_vuelo, name='reporte_pasajeros_por_vuelo'),
+]
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="API Aerolínea",
+        default_version="v1",
+        description="Documentación de la API del Sistema de Gestión de Aerolínea",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+urlpatterns = [
+    path("api/", include("aerolineas.api.urls")),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/docs/", schema_view.with_ui("swagger", cache_timeout=0), name="swagger-ui"),
 ]
