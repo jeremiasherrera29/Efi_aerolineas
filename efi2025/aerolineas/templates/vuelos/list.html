@@ -17,21 +17,38 @@
                         <i class="bi bi-airplane-fill me-2"></i>{{ vuelo.avion }}
                     </h5>
                     <p class="card-text">
-                        <span class="fw-semibold"><i class="bi bi-geo-alt-fill"></i> <strong>Origen:</strong></span> {{ vuelo.origen }}<br>
-                        <span class="fw-semibold"><i class="bi bi-flag-fill"></i> <strong>Destino:</strong></span> {{ vuelo.destino }}<br>
-                        <span class="fw-semibold"><i class="bi bi-clock-fill"></i> <strong>Salida:</strong></span> {{ vuelo.fecha_salida }}<br>
-                        <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> <strong>Llegada:</strong></span> {{ vuelo.fecha_llegada }}
+                        <span class="fw-semibold"><i class="bi bi-geo-alt-fill"></i> <strong>Origen:</strong></span>
+                        {{ vuelo.origen }}<br>
 
+                        <span class="fw-semibold"><i class="bi bi-flag-fill"></i> <strong>Destino:</strong></span>
+                        {{ vuelo.destino }}<br>
+
+                        <span class="fw-semibold"><i class="bi bi-clock-fill"></i> <strong>Salida:</strong></span>
+                        {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}<br>
+
+                        <span class="fw-semibold"><i class="bi bi-hourglass-split"></i> <strong>Llegada:</strong></span>
+                        {{ vuelo.fecha_llegada|date:"d/m/Y H:i" }}<br>
+
+                        <span class="fw-semibold"><i class="bi bi-cash-stack"></i> <strong>Precio:</strong></span>
+                        ${{ vuelo.precio_base }}<br>
+
+                        <span class="fw-semibold"><i class="bi bi-broadcast"></i> <strong>Estado:</strong></span>
+                        {{ vuelo.get_estado_display }}
                     </p>
+
                     <a href="{% url 'disponibilidad_asientos' vuelo.id %}" class="btn btn-outline-primary mt-3">
                         <i class="bi bi-eye-fill"></i> Ver Asientos
                     </a>
+
                     <a href="{% url 'vuelos_detail' vuelo.id %}" class="btn btn-outline-primary mt-3">
-                        <i class="bi bi-eye-fill"></i> Ver Detalle
+                        <i class="bi bi-info-circle"></i> Detalle
                     </a>
+
+                    {% if user.rol == "ADM" %}
                     <a href="{% url 'vuelos_delete' vuelo.id %}" class="btn btn-outline-danger mt-3">
                         <i class="bi bi-trash-fill"></i> Eliminar Vuelo
-                    </a>    
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

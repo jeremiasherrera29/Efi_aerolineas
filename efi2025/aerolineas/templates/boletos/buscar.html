@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Buscar Boleto</h2>
+
+    <form method="get" class="d-flex mb-4">
+        <input type="text" name="codigo" class="form-control me-2" placeholder="Ingrese el código del boleto" value="{{ request.GET.codigo }}">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+
+    {% if boletos %}
+        {% if boletos.exists %}
+            <h5>Resultados:</h5>
+            <ul class="list-group">
+                {% for boleto in boletos %}
+                    <li class="list-group-item">
+                        <strong>Código:</strong> {{ boleto.codigo_barra }} <br>
+                        <strong>Pasajero:</strong> {{ boleto.reserva.pasajero.nombre }} <br>
+                        <strong>Vuelo:</strong> {{ boleto.reserva.vuelo }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-danger">No se encontraron boletos con ese código.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

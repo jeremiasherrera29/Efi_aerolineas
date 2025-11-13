@@ -4,30 +4,35 @@
 
 {% block content %}
 <div class="container py-5">
-    <h2 class="mb-4 text-center text-dark">
-        <i class="bi bi-card-checklist"></i> Lista de Reservas
-    </h2>
-
+        <h2 class="mb-4 text-center text-dark">
+            <i class="bi bi-airplane"></i> Lista de reservas
+            <a href="{% url 'reservas_create' %}" class="btn btn-success">Crear reserva</a>  
+        </h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for reserva in reservas %}
         <div class="col">
             <div class="card border-0 shadow-sm h-100">
                 <div class="card-body">
                     <h5 class="card-title text-primary">
-                        <i class="bi bi-airplane-engines text-primary"></i> {{ reserva.vuelo.origen }} ➔ {{ reserva.vuelo.destino }}
+                        <i class="bi bi-airplane-engines text-primary"></i> {{ reserva.vuelo.origen }} ➔ {{reserva.vuelo.destino }}
                     </h5>
                     <p class="card-text">
-                        <span class="fw-semibold"><i class=""></i> <strong>Pasajero:</strong></span> {{ reserva.pasajero.nombre }}<br>
-                        <strong>Documento:</strong></span> {{ reserva.pasajero.documento }}<br>
-                        <span class="fw-semibold"><i class=""></i><strong>Asiento:</strong> </span> #{{ reserva.asiento.numero }}
+                        <strong>Pasajero:</strong> {{ reserva.pasajero.nombre }}<br>
+                        <strong>Documento:</strong> {{ reserva.pasajero.documento }}<br>
+                        <strong>Asiento:</strong> #{{ reserva.asiento.numero }}
                     </p>
+
                     <a href="{% url 'reservas_detail' reserva.id %}" class="btn btn-outline-primary">
                         <i class="bi bi-eye-fill"></i> Ver Detalle
                     </a>
-                    <a href="{% url 'reservas_delete' reserva.id %}" class="btn btn-outline-danger">
-                        <i class="bi bi-trash3-fill"></i> Eliminar
-                    </a>
+
+                    {% if user.rol == "ADM" or user.rol == "EMP" %}
+                        <a href="{% url 'reservas_delete' reserva.id %}" class="btn btn-outline-danger">
+                            <i class="bi bi-trash3-fill"></i> Eliminar
+                        </a>
+                    {% endif %}
                 </div>
+
             </div>
         </div>
         {% empty %}

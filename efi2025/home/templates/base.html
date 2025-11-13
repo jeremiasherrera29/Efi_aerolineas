@@ -1,8 +1,8 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
-  
   <title>{% block title %}{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,6 +15,7 @@
 </head>
 
 <body>
+
   {% if not ocultar_nav %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 shadow">
     <div class="container-fluid">
@@ -28,41 +29,76 @@
       </button>
 
       <div class="collapse navbar-collapse justify-content-between" id="navbarMenu">
-        {% if user.is_authenticated %}<!-- si estas autenticado va a aparecer todo esto -->
+
+        {% if user.is_authenticated %}
+        <div class="text-light small">
+          Rol actual: <strong>{{ user.get_rol_display }}</strong>
+        </div>
+        {% endif %}
+
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" href="{% url 'vuelos_list' %}">Vuelos</a></li>
+
+          {% if user.is_authenticated %}
+
+          {% if user.rol == "ADM" %}
           <li class="nav-item"><a class="nav-link" href="{% url 'usuarios_list' %}">Usuarios</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'reservas_list' %}">Reservas</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'pasajeros_list' %}">Pasajeros</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'boletos_list' %}">Boletos</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'aviones_list' %}">Aviones</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'asientos_list' %}">Asientos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'pasajeros_list' %}">Pasajeros</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'reservas_list' %}">Reservas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'boletos_list' %}">Boletos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'buscar_boleto' %}">Buscar Boleto</a></li>
+
+          {% elif user.rol == "EMP" %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'pasajeros_list' %}">Pasajeros</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'reservas_list' %}">Reservas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'boletos_list' %}">Boletos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'buscar_boleto' %}">Buscar Boleto</a></li>
+          
+          {% elif user.rol == "PAS" %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'reservas_list' %}">Reservas</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'boletos_list' %}">Boletos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'buscar_boleto' %}">Buscar boleto</a></li>
+          {% endif %}
+
+          {% endif %}
+
         </ul>
 
         <div class="d-flex align-items-center">
+          {% if user.is_authenticated %}
           <a class="btn btn-outline-light" href="{% url 'logout' %}">Cerrar sesión</a>
-        </div> <!-- esto aparece a la derecha de todo -->
-        {% else %}
-        <div class="ms-auto">
-          <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Iniciar sesión</a>
-          <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
-        </div> <!-- si no estas autenticado aparece el login y el register -->
-        {% endif %}
+          {% else %}
+          <div class="ms-auto">
+            <a class="btn btn-outline-light me-2" href="{% url 'login' %}">Iniciar sesión</a>
+            <a class="btn btn-success" href="{% url 'register' %}">Registrarse</a>
+          </div>
+          {% endif %}
+        </div>
+
       </div>
     </div>
   </nav>
   {% endif %}
+
+  <!-- Alertas -->
   {% if messages %}
   {% for message in messages %}
-  {%if message.tags == 'error' %}
-  <div class="alert alert-danger">{{message}}</div>
+  {% if message.tags == 'error' %}
+  <div class="alert alert-danger">{{ message }}</div>
   {% else %}
-  <div class="alert alert-{{message.tags}}">{{message}}</div>
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
   {% endif %}
   {% endfor %}
   {% endif %}
 
-  {% block content %}{% endblock %}
+  <!-- Contenido dinámico -->
+  <div class="container mt-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>

@@ -8,11 +8,12 @@ from rest_framework import permissions
 from .views import (
     VueloList, VueloDetail, VueloDelete, VueloCreate,
     PasajeroList, PasajeroDetail, PasajeroDelete, PasajeroCreate, 
-    ReservaList, ReservaDetail, ReservaDelete, ReservaCreate,
-    BoletoList, BoletoDetail, BoletoDelete, BoletoCreate,
+    ReservaList, ReservaDelete, ReservaCreate,ReservaDetail,
+    BoletoList, BoletoDelete, BoletoCreate,BuscarBoletoView,BoletoDetail,
     UsuarioList, UsuarioDelete, UsuarioCreate, UsuarioUpdate,
     AvionList, AvionDetail, AvionDelete, AvionCreate,
     AsientoList, AsientoDetail, AsientoDelete, AsientoCreate,
+    RegisterView    
 )
 
 urlpatterns = [
@@ -33,15 +34,17 @@ urlpatterns = [
 
     # Reservas
     path('reservas/', ReservaList.as_view(), name='reservas_list'),
+    path('reservas/crear/', ReservaCreate.as_view(), name='reservas_create'),
     path('reservas/<int:reserva_id>/', ReservaDetail.as_view(), name='reservas_detail'),
     path('reservas/<int:reserva_id>/eliminar/', ReservaDelete.as_view(), name='reservas_delete'),
-    path('reservas/crear/', ReservaCreate.as_view(), name='reservas_create'),
+
 
     # Boletos
     path('boletos/', BoletoList.as_view(), name='boletos_list'),
-    path('boletos/<int:boleto_id>/', BoletoDetail.as_view(), name='boletos_detail'),
     path('boletos/<int:boleto_id>/eliminar/', BoletoDelete.as_view(), name='boletos_delete'),
     path('boletos/crear/', BoletoCreate.as_view(), name='boletos_create'),
+    path("boletos/buscar", BuscarBoletoView.as_view(), name="buscar_boleto"),
+    path('boletos/<int:pk>/', views.BoletoDetail.as_view(), name='boletos_detail'),
 
     # Usuarios
     path('usuarios/', UsuarioList.as_view(), name='usuarios_list'),
@@ -61,6 +64,8 @@ urlpatterns = [
     path('asientos/create/', views.AsientoCreate.as_view(), name='asientos_create'),
     path('asientos/<int:asiento_id>/delete/', views.AsientoDelete.as_view(), name='asientos_delete'),
 
+    path("register/", RegisterView.as_view(), name="register"),
+
     # Disponibilidad y reservas
     path('vuelos/<int:vuelo_id>/asientos/', views.disponibilidad_asientos, name='disponibilidad_asientos'),
     path('vuelos/<int:vuelo_id>/asientos/<int:asiento_id>/reservar/', views.reservar_asiento, name='reservar_asiento'),
@@ -78,7 +83,7 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-urlpatterns = [
+urlpatterns += [
     path("api/", include("aerolineas.api.urls")),
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),

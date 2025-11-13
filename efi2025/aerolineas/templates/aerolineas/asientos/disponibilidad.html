@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Disponibilidad de Asientos - Vuelo {{ vuelo.id }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <h2 class="mb-4 text-center">Disponibilidad de Asientos - Vuelo {{ vuelo.id }}</h2>
+
+    {% if asientos %}
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Número</th>
+                    <th>Fila</th>
+                    <th>Columna</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asiento in asientos %}
+                    <tr>
+                        <td>{{ asiento.numero }}</td>
+                        <td>{{ asiento.fila }}</td>
+                        <td>{{ asiento.columna }}</td>
+                        <td>{{ asiento.tipo }}</td>
+                        <td>{{ asiento.estado }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'vuelos_list' %}" class="btn btn-secondary mt-3">Volver a la lista de vuelos</a>
+    
+
+    {% else %}
+        <div class="alert alert-warning text-center">
+            No hay asientos disponibles para este vuelo.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
